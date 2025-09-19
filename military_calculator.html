@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Military Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #ddd;
+        }
+        .tab {
+            padding: 15px 25px;
+            background: #f8f9fa;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            color: #666;
+            border-radius: 8px 8px 0 0;
+            margin-right: 5px;
+            transition: all 0.3s;
+        }
+        .tab.active {
+            background: #007bff;
+            color: white;
+            border-bottom: 2px solid #007bff;
+        }
+        .tab:hover:not(.active) {
+            background: #e9ecef;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .input-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        .input-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            gap: 10px;
+        }
+        label {
+            font-weight: bold;
+            min-width: 150px;
+            color: #555;
+        }
+        input[type="number"] {
+            padding: 8px 12px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            width: 100px;
+        }
+        input[type="number"]:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+        .results {
+            background: #e8f4fd;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #007bff;
+        }
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+        }
+        .result-item:last-child {
+            border-bottom: none;
+        }
+        .result-label {
+            font-weight: bold;
+            color: #333;
+        }
+        .result-value {
+            font-size: 18px;
+            color: #007bff;
+            font-weight: bold;
+        }
+        .proportion-info {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border-left: 4px solid #ffc107;
+        }
+        .proportion-info h3 {
+            margin-top: 0;
+            color: #856404;
+        }
+        .proportion-info ul {
+            margin: 10px 0;
+            color: #856404;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏹 Military Calculator</h1>
+        
+        <div class="tabs">
+            <button class="tab active" onclick="switchTab('tab1234')">1/2/3/4</button>
+            <button class="tab" onclick="switchTab('tab123')">1/2/3</button>
+            <button class="tab" onclick="switchTab('tab23')">2/3</button>
+            <button class="tab" onclick="switchTab('tab234')">2/3/4</button>
+        </div>
+
+        <!-- TAB 1: 1/2/3/4 -->
+        <div id="tab1234" class="tab-content active">
+            <div class="proportion-info">
+                <h3>Deployment proportions (1/2/3/4):</h3>
+                <ul>
+                    <li><strong>Basket 1:</strong> 57%</li>
+                    <li><strong>Basket 2:</strong> 23%</li>
+                    <li><strong>Basket 3:</strong> 12%</li>
+                    <li><strong>Basket 4:</strong> 8%</li>
+                </ul>
+                <p><strong>Spearman:Swordsman ratio = 3:5</strong></p>
+            </div>
+
+            <div class="input-section">
+                <h3>Enter data:</h3>
+                <div class="input-group">
+                    <label for="spearmen1234">Number of Spearmen:</label>
+                    <input type="number" id="spearmen1234" value="0" min="0">
+                </div>
+                <div class="input-group">
+                    <label for="swordsmen1234">Number of Swordsmen:</label>
+                    <input type="number" id="swordsmen1234" value="0" min="0">
+                </div>
+            </div>
+
+            <div class="results">
+                <h3>Troop deployment results:</h3>
+                <div class="result-item">
+                    <span class="result-label">Total troops:</span>
+                    <span class="result-value" id="total1234">0</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Basket 1 (57%):</span>
+                    <span class="result-value" id="basket1_1234">0 Spear + 0 Sword</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Basket 2 (23%):</span>
+                    <span class="result-value" id="basket2_1234">0 Spear + 0 Sword</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Basket 3 (12%):</span>
+                    <span class="result-value" id="basket3_1234">0 Spear + 0 Sword</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Basket 4 (8%):</span>
+                    <span class="result-value" id="basket4_1234">0 Spear + 0 Sword</span>
+                </div>
+                
+                <h3 style="margin-top: 30px;">3:5 ratio verification:</h3>
+                <div class="result-item">
+                    <span class="result-label">Spearmen:</span>
+                    <span class="result-value" id="checkSpear1234">0</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Swordsmen:</span>
+                    <span class="result-value" id="checkSword1234">0</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Actual ratio:</span>
+                    <span class="result-value" id="ratio1234">0:0</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">3:5 compliance:</span>
+                    <span class="result-value" id="check1234" style="color: #dc3545;">❌</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 2: 1/2/3 -->
+        <div id="tab123" class="tab-content">
+            <div class="proportion-info">
+                <h3>Deployment proportions (1/2/3):</h3>
+                <ul>
+                    <li><strong>Basket 1:</strong> 62%</li>
+                    <li><strong>Basket 2:</strong> 26%</li>
+                    <li><strong>Basket 3:</strong> 12%</li>
+                </ul>
+                <p><strong>Spearman:Swordsman ratio = 3:5</strong></p>
+            </div>
+
+            <div class="input-section">
+                <h3>Enter data:</h3>
+                <div class="input-group">
+                    <label for="spearmen123">Number of Spearmen:</label>
+                    <input type="number" id="spearmen123" value="0" min="0">
+                </div>
+                <div class="input-group">
+                    <label for="swordsmen123">Number of Swordsmen:</label>
+                    <input type="number" id="swordsmen123" value="0" min="0">
+                </div>
+            </div>
+
+            <div class="results">
+                <h3>Troop deployment results:</h3>
+                <div class="result-item">
+                    <span class="result-label">Total troops:</span>
+                    <span class="result-value" id="total123">0</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Basket 1 (62%):</span>
+                    <span class="result-value" id="basket1_123">0 Spear + 0 Sword</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Basket 2 (26%):</span>
+                    <span class="result-value" id="basket2_123">0 Spear + 0 Sword</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Basket 3 (12%):</span>
+                    <span class="result-value" id="basket3_123">0 Spear + 0 Sword</span>
+                </div>
+                
+                <h3 style="margin-top: 30px;">3:5 ratio verification:</h3>
+                <div class="result-item">
+                    <span class="result-label">Spearmen:</span>
+                    <span class="result-value" id="checkSpear123">0</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Swordsmen:</span>
+                    <span class="result-value" id="checkSword123">0</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Actual ratio:</span>
+                    <span class="result-value" id="ratio123">0:0</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">3:5 compliance:</span>
+                    <span class="result-value" id="check123" style="color: #dc3545;">❌</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 3: 2/3 -->
+        <div id="tab23" class="tab-content">
+            <div class="proportion-info">
+                <h3>Deployment proportions (2/3):</h3>
+                <ul>
+                    <li><strong>Basket 2:</strong> 67%</li>
+                    <li><strong>Basket 3:</strong> 33%</li>
+                </ul>
+                <p><strong>Spearman:Swordsman ratio = 3:5</strong></p>
+            </div>
+
+            <div class="input-section">
+                <h3>Enter data:</h3>
+                <div class="input-group">
+                    <label for="spearmen23">Number of Spearmen:</label>
+                    <input type="number" id="spearmen23" value="0" min="0">
+                </div>
+                <div class="input-group">
+                    <label for="swordsmen23">Number of Swordsmen:</label>
+                    <input type="number" id="swordsmen23" value="0" min="0">
+                </div>
+            </div>
+
+            <div class="results">
+                <h3>Troop deployment results:</h3>
+                <div class="result-item">
+                    <span class="result-label">Total troops:</span>
+                    <span class="result-value" id="total23">0</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Basket 2 (67%):</span>
+                    <span class="result-value" id="basket2_23">0 Spear + 0 Sword</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Basket 3 (33%):</span>
+                    <span class="result-value" id="basket3_23">0 Spear + 0 Sword</span>
+                </div>
+                
+                <h3 style="margin-top: 30px;">3:5 ratio verification:</h3>
+                <div class="result-item">
+                    <span class="result-label">Spearmen:</span>
+                    <span class="result-value" id="checkSpear23">0</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Swordsmen:</span>
+                    <span class="result-value" id="checkSword23">0</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Actual ratio:</span>
+                    <span class="result-value" id="ratio23">0:0</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">3:5 compliance:</span>
+                    <span class="result-value" id="check23" style="color: #dc3545;">❌</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 4: 2/3/4 -->
+        <div id="tab234" class="tab-content">
+            <div class="proportion-info">
+                <h3>Deployment proportions (2/3/4):</h3>
+                <ul>
+                    <li><strong>Basket 2:</strong> 57%</li>
+                    <li><strong>Basket 3:</strong> 29%</li>
+                    <li><strong>Basket 4:</strong> 14%</li>
+                </ul>
+                <p><strong>Spearman:Swordsman ratio = 3:5</strong></p>
+            </div>
+
+            <div class="input-section">
+                <h3>Enter data:</h3>
+                <div class="input-group">
+                    <label for="spearmen234">Number of Spearmen:</label>
+                    <input type="number" id="spearmen234" value="0" min="0">
+                </div>
+                <div class="input-group">
+                    <label for="swordsmen234">Number of Swordsmen:</label>
+                    <input type="number" id="swordsmen234" value="0" min="0">
+                </div>
+            </div>
+
+            <div class="results">
+                <h3>Troop deployment results:</h3>
+                <div class="result-item">
+                    <span class="result-label">Total troops:</span>
+                    <span class="result-value" id="total234">0</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Basket 2 (57%):</span>
+                    <span class="result-value" id="basket2_234">0 Spear + 0 Sword</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Basket 3 (29%):</span>
+                    <span class="result-value" id="basket3_234">0 Spear + 0 Sword</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Basket 4 (14%):</span>
+                    <span class="result-value" id="basket4_234">0 Spear + 0 Sword</span>
+                </div>
+                
+                <h3 style="margin-top: 30px;">3:5 ratio verification:</h3>
+                <div class="result-item">
+                    <span class="result-label">Spearmen:</span>
+                    <span class="result-value" id="checkSpear234">0</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Swordsmen:</span>
+                    <span class="result-value" id="checkSword234">0</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Actual ratio:</span>
+                    <span class="result-value" id="ratio234">0:0</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">3:5 compliance:</span>
+                    <span class="result-value" id="check234" style="color: #dc3545;">❌</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function switchTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Remove active state from all buttons
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected tab
+            document.getElementById(tabName).classList.add('active');
+            
+            // Mark active button
+            event.target.classList.add('active');
+            
+            // Recalculate values
+            calculate(tabName);
+        }
+
+        function calculateOptimalRatio(totalTroops) {
+            // Calculate optimal numbers for 3:5 ratio (spear:sword)
+            const totalParts = 3 + 5; // 8 parts
+            const spearPerPart = Math.floor(totalTroops / totalParts);
+            const remainder = totalTroops % totalParts;
+            
+            let optimalSpear = spearPerPart * 3;
+            let optimalSword = spearPerPart * 5;
+            
+            // Add remainder to swordsmen (since they have larger share)
+            optimalSword += remainder;
+            
+            return { spear: optimalSpear, sword: optimalSword };
+        }
+
+        function distributeByRatio(totalSpear, totalSword, percentage) {
+            // Distribution maintaining 3:5 ratio in each basket
+            const totalForBasket = Math.floor((totalSpear + totalSword) * percentage);
+            const optimal = calculateOptimalRatio(totalForBasket);
+            return optimal;
+        }
+
+        function calculate(tab) {
+            const inputSpear = parseInt(document.getElementById('spearmen' + tab.slice(3)).value) || 0;
+            const inputSword = parseInt(document.getElementById('swordsmen' + tab.slice(3)).value) || 0;
+            const total = inputSpear + inputSword;
+
+            // First check if 3:5 ratio can be achieved
+            const optimal = calculateOptimalRatio(total);
+            const useOptimal = total > 0;
+
+            // Use optimal values if available
+            const spearmen = useOptimal ? optimal.spear : inputSpear;
+            const swordsmen = useOptimal ? optimal.sword : inputSword;
+
+            document.getElementById('total' + tab.slice(3)).textContent = total;
+
+            if (tab === 'tab1234') {
+                // 57%, 23%, 12%, 8%
+                const b1 = distributeByRatio(spearmen, swordsmen, 0.57);
+                const b2 = distributeByRatio(spearmen, swordsmen, 0.23);
+                const b3 = distributeByRatio(spearmen, swordsmen, 0.12);
+                const b4 = distributeByRatio(spearmen, swordsmen, 0.08);
+                
+                // Correction so the sum matches
+                const usedSpear = b1.spear + b2.spear + b3.spear + b4.spear;
+                const usedSword = b1.sword + b2.sword + b3.sword + b4.sword;
+                b4.spear += (spearmen - usedSpear);
+                b4.sword += (swordsmen - usedSword);
+                
+                document.getElementById('basket1_1234').textContent = `${b1.spear} Spear + ${b1.sword} Sword`;
+                document.getElementById('basket2_1234').textContent = `${b2.spear} Spear + ${b2.sword} Sword`;
+                document.getElementById('basket3_1234').textContent = `${b3.spear} Spear + ${b3.sword} Sword`;
+                document.getElementById('basket4_1234').textContent = `${b4.spear} Spear + ${b4.sword} Sword`;
+            } else if (tab === 'tab123') {
+                // 62%, 26%, 12%
+                const b1 = distributeByRatio(spearmen, swordsmen, 0.62);
+                const b2 = distributeByRatio(spearmen, swordsmen, 0.26);
+                const b3 = distributeByRatio(spearmen, swordsmen, 0.12);
+                
+                const usedSpear = b1.spear + b2.spear + b3.spear;
+                const usedSword = b1.sword + b2.sword + b3.sword;
+                b3.spear += (spearmen - usedSpear);
+                b3.sword += (swordsmen - usedSword);
+                
+                document.getElementById('basket1_123').textContent = `${b1.spear} Spear + ${b1.sword} Sword`;
+                document.getElementById('basket2_123').textContent = `${b2.spear} Spear + ${b2.sword} Sword`;
+                document.getElementById('basket3_123').textContent = `${b3.spear} Spear + ${b3.sword} Sword`;
+            } else if (tab === 'tab23') {
+                // 67%, 33%
+                const b2 = distributeByRatio(spearmen, swordsmen, 0.67);
+                const b3 = distributeByRatio(spearmen, swordsmen, 0.33);
+                
+                const usedSpear = b2.spear + b3.spear;
+                const usedSword = b2.sword + b3.sword;
+                b3.spear += (spearmen - usedSpear);
+                b3.sword += (swordsmen - usedSword);
+                
+                document.getElementById('basket2_23').textContent = `${b2.spear} Spear + ${b2.sword} Sword`;
+                document.getElementById('basket3_23').textContent = `${b3.spear} Spear + ${b3.sword} Sword`;
+            } else if (tab === 'tab234') {
+                // 57%, 29%, 14%
+                const b2 = distributeByRatio(spearmen, swordsmen, 0.57);
+                const b3 = distributeByRatio(spearmen, swordsmen, 0.29);
+                const b4 = distributeByRatio(spearmen, swordsmen, 0.14);
+                
+                const usedSpear = b2.spear + b3.spear + b4.spear;
+                const usedSword = b2.sword + b3.sword + b4.sword;
+                b4.spear += (spearmen - usedSpear);
+                b4.sword += (swordsmen - usedSword);
+                
+                document.getElementById('basket2_234').textContent = `${b2.spear} Spear + ${b2.sword} Sword`;
+                document.getElementById('basket3_234').textContent = `${b3.spear} Spear + ${b3.sword} Sword`;
+                document.getElementById('basket4_234').textContent = `${b4.spear} Spear + ${b4.sword} Sword`;
+            }
+
+            checkRatio(spearmen, swordsmen, tab.slice(3));
+            
+            // Add correction information
+            if (useOptimal && (inputSpear !== spearmen || inputSword !== swordsmen)) {
+                const correctionEl = document.getElementById('correction' + tab.slice(3));
+                if (correctionEl) {
+                    correctionEl.innerHTML = `<strong>⚠️ Adjusted to optimal 3:5 ratio:</strong><br>
+                        Spearmen: ${inputSpear} → ${spearmen}<br>
+                        Swordsmen: ${inputSword} → ${swordsmen}`;
+                    correctionEl.style.display = 'block';
+                }
+            } else {
+                const correctionEl = document.getElementById('correction' + tab.slice(3));
+                if (correctionEl) {
+                    correctionEl.style.display = 'none';
+                }
+            }
+        }
+
+        function checkRatio(spearmen, swordsmen, suffix) {
+            document.getElementById('checkSpear' + suffix).textContent = spearmen;
+            document.getElementById('checkSword' + suffix).textContent = swordsmen;
+
+            if (spearmen > 0 && swordsmen > 0) {
+                const ratio = spearmen / swordsmen;
+                const ideal = 3 / 5;
+                
+                const gcd = (a, b) => b === 0 ? a : gcd(b, a % b);
+                const divisor = gcd(spearmen, swordsmen);
+                const simpleSpear = spearmen / divisor;
+                const simpleSword = swordsmen / divisor;
+                
+                document.getElementById('ratio' + suffix).textContent = `${simpleSpear}:${simpleSword}`;
+                
+                const isCorrect = Math.abs(ratio - ideal) <= ideal * 0.05;
+                const checkEl = document.getElementById('check' + suffix);
+                
+                if (isCorrect) {
+                    checkEl.textContent = '✅ Compliant';
+                    checkEl.style.color = '#28a745';
+                } else {
+                    checkEl.textContent = '❌ Non-compliant';
+                    checkEl.style.color = '#dc3545';
+                }
+            } else if (spearmen > 0 || swordsmen > 0) {
+                document.getElementById('ratio' + suffix).textContent = 'Single type only';
+                document.getElementById('check' + suffix).textContent = '➖ N/A';
+                document.getElementById('check' + suffix).style.color = '#6c757d';
+            } else {
+                document.getElementById('ratio' + suffix).textContent = '0:0';
+                document.getElementById('check' + suffix).textContent = '❌';
+                document.getElementById('check' + suffix).style.color = '#dc3545';
+            }
+        }
+
+        // Event listeners
+        ['1234', '123', '23', '234'].forEach(suffix => {
+            document.getElementById('spearmen' + suffix).addEventListener('input', () => calculate('tab' + suffix));
+            document.getElementById('swordsmen' + suffix).addEventListener('input', () => calculate('tab' + suffix));
+        });
+
+        // Initial calculations
+        ['tab1234', 'tab123', 'tab23', 'tab234'].forEach(tab => calculate(tab));
+    </script>
+</body>
+</html>
